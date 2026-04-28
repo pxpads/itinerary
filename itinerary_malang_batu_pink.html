@@ -1,0 +1,640 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .page {
+    font-family: 'Nunito', sans-serif;
+    background: #fff5f8;
+    color: #4a2535;
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: #fbeaf0;
+    border-bottom: 2px dashed #f4c0d1;
+    padding: 48px 28px 36px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: #f4c0d1;
+    color: #993556;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 48px;
+    color: #d4537e;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  .hero h1 span { color: #993556; }
+
+  .hero-sub {
+    font-size: 14px;
+    color: #993556;
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    background: #fff;
+    border: 1.5px solid #f4c0d1;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #993556;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meta-pill .ico { font-size: 14px; }
+
+  .tabs {
+    display: flex;
+    background: #fbeaf0;
+    border-bottom: 2px solid #f4c0d1;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 14px 8px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: #c87898;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .tab.active {
+    color: #d4537e;
+    border-bottom-color: #d4537e;
+    background: #fff0f5;
+  }
+
+  .tab:hover:not(.active) { background: #fff5f8; color: #b05070; }
+
+  .content {
+    padding: 0 20px 48px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .day-header {
+    padding: 28px 0 18px;
+    border-bottom: 1.5px dashed #f4c0d1;
+    margin-bottom: 4px;
+  }
+
+  .day-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c899b0;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .day-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 26px;
+    color: #d4537e;
+    margin-bottom: 4px;
+  }
+
+  .day-focus {
+    font-size: 13px;
+    color: #993556;
+    font-weight: 600;
+  }
+
+  .timeline { padding: 8px 0; }
+
+  .event {
+    display: grid;
+    grid-template-columns: 68px 22px 1fr;
+    gap: 0 10px;
+    padding: 14px 0;
+  }
+
+  .event-time {
+    font-size: 11px;
+    font-weight: 800;
+    color: #c899b0;
+    text-align: right;
+    padding-top: 3px;
+    line-height: 1.3;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .event-dot-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .event-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fbeaf0;
+    border: 2.5px solid #f4c0d1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .event.highlight .event-dot {
+    background: #d4537e;
+    border-color: #d4537e;
+  }
+
+  .event-line {
+    width: 2px;
+    flex: 1;
+    background: #f4c0d1;
+    margin-top: 4px;
+    border-radius: 2px;
+  }
+
+  .event:last-child .event-line { display: none; }
+
+  .event-body { padding-bottom: 4px; }
+
+  .event-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a2535;
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+
+  .event.highlight .event-title { color: #72243e; }
+
+  .event-desc {
+    font-size: 12px;
+    color: #b07890;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .event-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 800;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .tag-food { background: #faeeda; color: #854f0b; }
+  .tag-stay { background: #e6f1fb; color: #185fa5; }
+  .tag-wisata { background: #eeedfe; color: #534ab7; }
+  .tag-otw { background: #f1efe8; color: #5f5e5a; }
+  .tag-cafe { background: #fbeaf0; color: #993556; }
+  .tag-sejarah { background: #e1f5ee; color: #0f6e56; }
+
+  .budget-section { padding-top: 24px; }
+
+  .budget-total {
+    background: #fbeaf0;
+    border: 2px dashed #f4c0d1;
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .budget-total-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #c899b0;
+    margin-bottom: 6px;
+    font-weight: 800;
+  }
+
+  .budget-total-amount {
+    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+    color: #d4537e;
+  }
+
+  .budget-total-sub {
+    font-size: 12px;
+    color: #c87898;
+    margin-top: 4px;
+    font-weight: 700;
+  }
+
+  .budget-card {
+    background: #fff;
+    border: 1.5px solid #f4c0d1;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .budget-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .budget-card-cat {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #c899b0;
+    font-weight: 800;
+  }
+
+  .budget-card-total {
+    font-size: 15px;
+    font-weight: 800;
+    color: #d4537e;
+  }
+
+  .budget-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 12px;
+    border-top: 1px dashed #f4c0d1;
+  }
+
+  .budget-item-name { color: #b07890; font-weight: 600; }
+  .budget-item-cost { color: #72243e; font-weight: 700; }
+
+  .bar-wrap {
+    height: 4px;
+    background: #fbeaf0;
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: #d4537e;
+  }
+
+  .tips-section { padding-top: 24px; }
+
+  .tip-card {
+    background: #fff;
+    border: 1.5px solid #f4c0d1;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .tip-num {
+    font-family: 'Pacifico', cursive;
+    font-size: 26px;
+    color: #f4c0d1;
+    line-height: 1;
+    min-width: 28px;
+  }
+
+  .tip-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #72243e;
+    margin-bottom: 5px;
+  }
+
+  .tip-text {
+    font-size: 12px;
+    color: #b07890;
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  .tip-text strong { color: #d4537e; font-weight: 800; }
+</style>
+
+<div class="page">
+  <div class="hero">
+    <div class="hero-badge">9 - 10 Mei 2025</div>
+    <h1>Malang <span>&</span> Batu</h1>
+    <p class="hero-sub">Staycation 2 Hari berdua ♡</p>
+    <div class="hero-meta">
+      <div class="meta-pill"><span class="ico">🏍</span> Motor Rental</div>
+      <div class="meta-pill"><span class="ico">🌅</span> Sunrise di Batu</div>
+      <div class="meta-pill"><span class="ico">💸</span> Rp 1.000.000</div>
+      <div class="meta-pill"><span class="ico">🏨</span> Sazara Hotel</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('h1',this)">🌶 Hari 1</div>
+    <div class="tab" onclick="showTab('h2',this)">🌄 Hari 2</div>
+    <div class="tab" onclick="showTab('budget',this)">💰 Budget</div>
+    <div class="tab" onclick="showTab('tips',this)">✨ Tips</div>
+  </div>
+
+  <div class="content">
+
+    <div class="section active" id="h1">
+      <div class="day-header">
+        <div class="day-label">Hari Pertama</div>
+        <div class="day-title">Kuliner & Malam Batu</div>
+        <div class="day-focus">Sambal pedas · sunset cantik · lampion malam ✨</div>
+      </div>
+      <div class="timeline">
+        <div class="event">
+          <div class="event-time">12.06</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Tiba di Stasiun Malang Kota Baru</div>
+            <div class="event-desc">Cek barang bawaan dulu ya jangan sampe ketinggalan!</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event-time">12.06–12.30</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Jemput Rental Motor</div>
+            <div class="event-desc">Cek rem, lampu, helm. Aman dulu baru cus!</div>
+            <span class="event-tag tag-otw">Transportasi</span>
+          </div>
+        </div>
+        <div class="event highlight">
+          <div class="event-time">12.40–13.45</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Makan Siang @ Spesial Sambal Cak Uut</div>
+            <div class="event-desc">Siapkan perut & tisu extra! Pedas banget katanya hehe~</div>
+            <span class="event-tag tag-food">Kuliner</span>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event-time">13.45–14.20</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">OTW ke Sazara Hotel, Batu</div>
+            <div class="event-desc">Naik-naik ke puncak gunung~ perjalanan ~34 menit.</div>
+            <span class="event-tag tag-otw">34 menit</span>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event-time">14.20–15.30</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Check-in & Istirahat di Sazara Hotel</div>
+            <div class="event-desc">Rebahan sebentar, segarkan diri, terus cuss ke kafe!</div>
+            <span class="event-tag tag-stay">Akomodasi</span>
+          </div>
+        </div>
+        <div class="event highlight">
+          <div class="event-time">15.45–17.45</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Sunset @ Chatten Cafe</div>
+            <div class="event-desc">Golden hour vibes! Duduk santai sambil nunggu matahari turun.</div>
+            <span class="event-tag tag-cafe">Kafe · Sunset</span>
+          </div>
+        </div>
+        <div class="event highlight">
+          <div class="event-time">18.15–19.45</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Malang Night Paradise</div>
+            <div class="event-desc">Lampion warna-warni, taman lampu, wahana seru! Beli tiket online biar gak antri~</div>
+            <span class="event-tag tag-wisata">Wisata Malam</span>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event-time">20.15–20.45</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Jajan di Alun-Alun Batu</div>
+            <div class="event-desc">Ketan Legenda atau susu sapi murni segar. Yumm!</div>
+            <span class="event-tag tag-food">Jajan Malam</span>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event-time">21.00</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Balik ke Hotel, Istirahat!</div>
+            <div class="event-desc">Tidur cepet ya, besok bangun subuh! Selamat malam~</div>
+            <span class="event-tag tag-stay">Akomodasi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="h2">
+      <div class="day-header">
+        <div class="day-label">Hari Kedua</div>
+        <div class="day-title">Sunrise & Heritage</div>
+        <div class="day-focus">Subuh dingin · foto estetik · pulang kenyang 🌸</div>
+      </div>
+      <div class="timeline">
+        <div class="event">
+          <div class="event-time">04.00</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Bangun Pagi! (semangat!)</div>
+            <div class="event-desc">Suhu Batu bisa 15–17°C. Langsung pake jaket ya jangan kena angin!</div>
+          </div>
+        </div>
+        <div class="event highlight">
+          <div class="event-time">04.30–06.00</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Sunrise @ Potatoes Cafe</div>
+            <div class="event-desc">Cuma 4 menit dari hotel! Kopi hangat + view gunung pagi = sempurna.</div>
+            <span class="event-tag tag-cafe">Sunrise · Kopi</span>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event-time">06.00–08.00</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Balik Hotel — Sarapan & Packing</div>
+            <div class="event-desc">Mandi, sarapan, packing rapi. Jangan ada yang ketinggalan!</div>
+            <span class="event-tag tag-stay">Checkout</span>
+          </div>
+        </div>
+        <div class="event highlight">
+          <div class="event-time">08.30–11.30</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Kayutangan Heritage</div>
+            <div class="event-desc">Foto-foto di gedung kolonial lawas, ngopi di kedai estetik sekitar situ~</div>
+            <span class="event-tag tag-sejarah">Heritage · Foto</span>
+          </div>
+        </div>
+        <div class="event highlight">
+          <div class="event-time">11.30–12.45</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Makan Siang Terakhir!</div>
+            <div class="event-desc">Rekomendasi: Bakso Presiden atau warung sekitar Kayutangan. Jangan skip!</div>
+            <span class="event-tag tag-food">Kuliner</span>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event-time">12.45–13.15</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Kembalikan Motor</div>
+            <div class="event-desc">Janjian dekat Stasiun Kota Baru. Bayar overtime 1 jam = Rp10.000.</div>
+            <span class="event-tag tag-otw">Transportasi</span>
+          </div>
+        </div>
+        <div class="event highlight">
+          <div class="event-time">13.45–15.39</div>
+          <div class="event-dot-col"><div class="event-dot"></div><div class="event-line"></div></div>
+          <div class="event-body">
+            <div class="event-title">Perjalanan Pulang ke Surabaya</div>
+            <div class="event-desc">Malang Kota Baru → Surabaya Gubeng. Dadah Malang, sampai jumpa lagi!</div>
+            <span class="event-tag tag-otw">~2 jam</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="budget">
+      <div class="budget-section">
+        <div class="budget-total">
+          <div class="budget-total-label">Total Estimasi · 2 Orang</div>
+          <div class="budget-total-amount">Rp 1.000.000</div>
+          <div class="budget-total-sub">Rp 500.000 per orang · sudah termasuk buffer darurat!</div>
+        </div>
+
+        <div class="budget-card">
+          <div class="budget-card-header">
+            <span class="budget-card-cat">🏍 Transportasi</span>
+            <span class="budget-card-total">Rp 130.000</span>
+          </div>
+          <div class="budget-row"><span class="budget-item-name">Rental Motor 24 Jam</span><span class="budget-item-cost">Rp 90.000</span></div>
+          <div class="budget-row"><span class="budget-item-name">Overtime 1 Jam</span><span class="budget-item-cost">Rp 10.000</span></div>
+          <div class="budget-row"><span class="budget-item-name">Bensin</span><span class="budget-item-cost">Rp 30.000</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:13%"></div></div>
+        </div>
+
+        <div class="budget-card">
+          <div class="budget-card-header">
+            <span class="budget-card-cat">🏨 Akomodasi</span>
+            <span class="budget-card-total">Rp 220.000</span>
+          </div>
+          <div class="budget-row"><span class="budget-item-name">Sazara Hotel (1 malam)</span><span class="budget-item-cost">Rp 220.000</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:22%"></div></div>
+        </div>
+
+        <div class="budget-card">
+          <div class="budget-card-header">
+            <span class="budget-card-cat">🎡 Wisata</span>
+            <span class="budget-card-total">Rp 220.000</span>
+          </div>
+          <div class="budget-row"><span class="budget-item-name">Tiket Malang Night Paradise (2 org)</span><span class="budget-item-cost">Rp 220.000</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:22%"></div></div>
+        </div>
+
+        <div class="budget-card">
+          <div class="budget-card-header">
+            <span class="budget-card-cat">🍜 Konsumsi</span>
+            <span class="budget-card-total">Rp 430.000</span>
+          </div>
+          <div class="budget-row"><span class="budget-item-name">Makan Siang Hari 1 (Cak Uut)</span><span class="budget-item-cost">Rp 90.000</span></div>
+          <div class="budget-row"><span class="budget-item-name">Chatten Cafe (Snack/Drink)</span><span class="budget-item-cost">Rp 100.000</span></div>
+          <div class="budget-row"><span class="budget-item-name">Jajan Alun-Alun (Dinner)</span><span class="budget-item-cost">Rp 60.000</span></div>
+          <div class="budget-row"><span class="budget-item-name">Potatoes Cafe (Breakfast)</span><span class="budget-item-cost">Rp 80.000</span></div>
+          <div class="budget-row"><span class="budget-item-name">Makan Siang Hari 2</span><span class="budget-item-cost">Rp 100.000</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:43%"></div></div>
+        </div>
+
+        <div class="budget-card">
+          <div class="budget-card-header">
+            <span class="budget-card-cat">🎀 Buffer / Dana Darurat</span>
+            <span class="budget-card-total">Rp 200.000</span>
+          </div>
+          <div class="budget-row"><span class="budget-item-name">Biaya tak terduga / lain-lain</span><span class="budget-item-cost">Rp 200.000</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:20%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="tips">
+      <div class="tips-section">
+        <div class="tip-card">
+          <div class="tip-num">1</div>
+          <div>
+            <div class="tip-title">Bawa Jaket Tebal!</div>
+            <div class="tip-text">Suhu Batu waktu subuh bisa sampai <strong>15–17°C</strong> brr! Jaket tebal + sarung tangan wajib kalau mau naik motor pagi-pagi.</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-num">2</div>
+          <div>
+            <div class="tip-title">Overtime Motor = Rp 10.000</div>
+            <div class="tip-text">Karena kereta pulang jam 13.45 tapi motor disewa dari jam 12.30 hari sebelumnya, kena <strong>biaya overtime 1 jam</strong>. Sudah masuk hitungan kok!</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-num">3</div>
+          <div>
+            <div class="tip-title">Tiket Night Paradise — Beli Online!</div>
+            <div class="tip-text">Supaya gak antri panjang di malam hari, mendingan <strong>beli tiket online</strong> dulu sebelum berangkat. Hemat waktu & tenaga~</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-num">4</div>
+          <div>
+            <div class="tip-title">Simpan Karcis Parkir!</div>
+            <div class="tip-text">Di setiap lokasi (Cak Uut, Alun-Alun, Kayutangan) tarif parkir motor sekitar <strong>Rp 2.000–5.000</strong>. Jangan sampai hilang karcisnya ya!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
